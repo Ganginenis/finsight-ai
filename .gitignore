@@ -38,3 +38,6 @@ Thumbs.db
 # Generated data
 data/raw/
 data/processed/
+
+# Type checking cache
+.mypy_cache/
