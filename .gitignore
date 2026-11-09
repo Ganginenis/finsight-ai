@@ -39,5 +39,8 @@ Thumbs.db
 data/raw/
 data/processed/
 
+# Uploaded documents and generated storage
+storage/
+
 # Type checking cache
 .mypy_cache/

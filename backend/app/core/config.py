@@ -18,10 +18,7 @@ class Settings(BaseSettings):
     debug: bool = True
     api_v1_prefix: str = "/api/v1"
 
-    database_url: str = (
-        "postgresql+psycopg://postgres:password@localhost:5432/"
-        "finsight"
-    )
+    database_url: str
     test_database_url: str
     redis_url: str = "redis://localhost:6379/0"
 
@@ -29,6 +26,10 @@ class Settings(BaseSettings):
     ollama_model: str = "llama3.2:3b"
 
     secret_key: str = "replace-this-with-a-secure-random-value"
+
+    # Document ingestion configuration.
+    document_storage_dir: Path = PROJECT_ROOT / "storage" / "documents"
+    max_document_upload_size_bytes: int = 10 * 1024 * 1024
 
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env",
