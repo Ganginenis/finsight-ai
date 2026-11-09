@@ -22,6 +22,7 @@ class Settings(BaseSettings):
         "postgresql+psycopg://postgres:password@localhost:5432/"
         "finsight"
     )
+    test_database_url: str
     redis_url: str = "redis://localhost:6379/0"
 
     ollama_base_url: str = "http://localhost:11434"
