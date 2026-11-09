@@ -3,9 +3,15 @@ import uuid
 from datetime import datetime, timezone
 
 from sqlalchemy import BigInteger, DateTime, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.app.database.base import Base
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from backend.app.models.document_page import DocumentPage
+    from backend.app.models.document_chunk import DocumentChunk
 
 
 class Document(Base):
@@ -42,6 +48,12 @@ class Document(Base):
         nullable=False,
     )
 
+    # Relative path or storage key for the original PDF.
+    storage_path: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True,
+    )
+
     status: Mapped[str] = mapped_column(
         String(30),
         nullable=False,
@@ -59,4 +71,18 @@ class Document(Base):
         nullable=False,
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+    # One document can contain multiple extracted pages.
+    pages: Mapped[list["DocumentPage"]] = relationship(
+        back_populates="document",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    # One document can contain multiple generated chunks.
+    chunks: Mapped[list["DocumentChunk"]] = relationship(
+        back_populates="document",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
     )

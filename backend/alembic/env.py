@@ -7,7 +7,7 @@ from sqlalchemy import engine_from_config, pool
 
 from backend.app.core.config import get_settings
 from backend.app.database.base import Base
-from backend.app.models.document import Document
+from backend.app.models import Document, DocumentPage, DocumentChunk
 
 # Add the project root to Python's import path.
 PROJECT_ROOT = Path(__file__).resolve().parents[2]

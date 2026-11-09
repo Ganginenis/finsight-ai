@@ -274,7 +274,7 @@ The architecture diagram represents the target system. Not every component has b
 | Data Validation | Pydantic | In use |
 | ORM | SQLAlchemy 2.x | Implemented |
 | Database | PostgreSQL 17 | Running locally |
-| Database Migrations | Alembic | Initial migration applied |
+| Migrations | Alembic | Initial and document-ingestion schema migrations applied |
 | PDF Processing | PyMuPDF | Installed |
 | File Upload | python-multipart | Installed |
 | Testing | PyTest | In use |
@@ -290,6 +290,7 @@ The architecture diagram represents the target system. Not every component has b
 | Version Control | Git/GitHub | In use |
 | CI/CD | GitHub Actions | Planned |
 | Cloud | AWS | Planned |
+
 
 ---
 
@@ -320,8 +321,8 @@ This section reflects the actual implementation status, not just the intended ar
 
 | # | Module | Deliverables | Status |
 |---|---|---|---|
-| 9 | Ingestion Data Models | Document, page, and chunk models | In Progress |
-| 10 | Database Migration | Migration for page/chunk tables and storage path | In Progress |
+| 9 | Ingestion Data Models | Document, page, and chunk models | Completed |
+| 10 | Database Migration | Migration for page/chunk tables and storage path | Completed |
 | 11 | PDF Upload API | Secure document upload endpoint | Not Started |
 | 12 | File Validation | Type, size, signature, and integrity validation | Not Started |
 | 13 | File Storage | Secure local storage abstraction | Not Started |
@@ -398,7 +399,18 @@ This section reflects the actual implementation status, not just the intended ar
 
 ---
 
-# 7. Current Engineering Checkpoint
+# 7. Current engineering checkpoint
+
+- Backend and database foundations are in place.
+- The document registry API supports registering, retrieving, and listing document metadata.
+- The automated test suite has **16 passing tests**.
+- SQLAlchemy metadata registers `documents`, `document_pages`, and `document_chunks`.
+- Document persistence schema migration `6ef2f6254fb5` has been successfully applied.
+- The database is synchronized with SQLAlchemy models; `alembic check` reports no new upgrade operations.
+- Document records support a storage path for the original uploaded file.
+- Page-level extracted text and chunk-level text have dedicated database tables.
+- Foreign keys, cascading deletes, uniqueness constraints, validation constraints, and indexes are configured.
+- PDF upload, extraction, text cleaning, chunking, and persistence workflows are not yet implemented.
 
 **Latest verified position**
 
